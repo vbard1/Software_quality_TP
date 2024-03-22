@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e09bee88-8efd-413f-864f-150537904296" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Frontend/software-quality-mobile-frontend/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/software-quality-mobile-frontend/angular.json" afterDir="false" />
-    </list>
+    <list default="true" id="e09bee88-8efd-413f-864f-150537904296" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -76,6 +74,7 @@
       <updated>1711092349099</updated>
       <workItem from="1711092350185" duration="1367000" />
       <workItem from="1711093777704" duration="186000" />
+      <workItem from="1711098432131" duration="33000" />
     </task>
     <servers />
   </component>
