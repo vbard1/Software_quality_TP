@@ -2,3 +2,4 @@
 /Frontend/sq-frontend/.angular
 /Frontend/sq-frontend/node_modules
 /Frontend/sq-frontend/.idea
+Backend/sq-backend/src/main/resources/application.properties
