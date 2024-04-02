@@ -4,7 +4,6 @@ CREATE TABLE spectator(
    lastname VARCHAR(50),
    date_of_birth DATE,
    email VARCHAR(75) NOT NULL,
-   password VARCHAR(68) NOT NULL,
    adress VARCHAR(200),
    PRIMARY KEY(id_spectator),
    UNIQUE(email)
