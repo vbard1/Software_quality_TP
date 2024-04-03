@@ -3,6 +3,7 @@ package org.example.sqbackend.models;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Question {
@@ -49,4 +50,5 @@ public class Question {
     public void setPoll(Poll poll) {
         this.poll = poll;
     }
+
 }
