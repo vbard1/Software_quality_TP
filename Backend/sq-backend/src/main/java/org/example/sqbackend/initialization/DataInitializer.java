@@ -136,11 +136,7 @@ public class DataInitializer implements CommandLineRunner {
         sampleResponse.setChoice(choiceRepository.findByQuestionIdQuestion(questionsCurrentPoll.getFirst().getIdQuestion()).getFirst());
         responseRepository.save(sampleResponse);
     }
-
-    public Date generateRandomDate() {
-        return generateRandomDate(null, null);
-    }
-
+    
     public Date generateRandomDate(Date minDate, Date maxDate) {
         long now = System.currentTimeMillis();
         long lowerBound = (minDate != null) ? minDate.getTime() : now;
