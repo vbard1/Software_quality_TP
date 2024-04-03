@@ -1,21 +1,16 @@
-package org.example.sqbackend.models;
+package org.example.sqbackend.models.Ticket;
 
 import jakarta.persistence.*;
+import org.example.sqbackend.models.Event;
+import org.example.sqbackend.models.Spectator;
 
 import java.util.Date;
 
 @Entity
+@Table(name = "ticket")
 public class Ticket {
-
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "id_spectator")
-    private Spectator spectator;
-
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "id_event")
-    private Event event;
+    @EmbeddedId
+    private TicketId id;
 
     @Column(nullable = false, unique = true)
     private String ticketNumber;
@@ -23,20 +18,23 @@ public class Ticket {
     private Date startDate;
     private Date endDate;
 
+    public Ticket() {
+        this.id = new TicketId();
+    }
     public Spectator getSpectator() {
-        return spectator;
+        return id.getSpectator();
     }
 
     public void setSpectator(Spectator spectator) {
-        this.spectator = spectator;
+        this.id.setSpectator(spectator);
     }
 
     public Event getEvent() {
-        return event;
+        return this.id.getEvent();
     }
 
     public void setEvent(Event event) {
-        this.event = event;
+        this.id.setEvent(event);
     }
 
     public String getTicketNumber() {

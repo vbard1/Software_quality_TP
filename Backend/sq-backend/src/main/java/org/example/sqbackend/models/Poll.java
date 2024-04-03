@@ -13,6 +13,7 @@ public class Poll {
     @JoinColumn(name = "id_event")
     private Event event;
 
+    private String name;
     public int getIdPoll() {
         return idPoll;
     }
@@ -27,5 +28,13 @@ public class Poll {
 
     public void setEvent(Event event) {
         this.event = event;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
