@@ -1,14 +1,18 @@
 package org.example.sqbackend.services.impl;
 
 import jdk.jshell.spi.ExecutionControl;
+import org.example.sqbackend.models.Choice;
 import org.example.sqbackend.models.Poll;
 import org.example.sqbackend.models.Question;
 import org.example.sqbackend.models.Spectator;
+import org.example.sqbackend.repositories.ChoiceRepository;
 import org.example.sqbackend.repositories.PollRepository;
 import org.example.sqbackend.repositories.QuestionRepository;
+import org.example.sqbackend.repositories.ResponseRepository;
 import org.example.sqbackend.services.QuestionService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,11 +20,16 @@ import java.util.stream.Collectors;
 @Service
 public class QuestionServiceImpl implements QuestionService {
 
-    private QuestionRepository questionRepository;
-    private PollRepository pollRepository;
-    public QuestionServiceImpl(QuestionRepository questionRepository, PollRepository pollRepository) {
+    private final QuestionRepository questionRepository;
+    private final ResponseRepository responseRepository;
+
+    private final ChoiceRepository choiceRepository;
+    private final PollRepository pollRepository;
+    public QuestionServiceImpl(QuestionRepository questionRepository, PollRepository pollRepository, ResponseRepository responseRepository, ChoiceRepository choiceRepository) {
         this.questionRepository=questionRepository;
         this.pollRepository=pollRepository;
+        this.responseRepository = responseRepository;
+        this.choiceRepository = choiceRepository;
     }
 
     /**
@@ -62,8 +71,17 @@ public class QuestionServiceImpl implements QuestionService {
      */
     @Override
     public List<Question> filterAnsweredQuestions(List<Question> questions, Spectator spectator) {
-        // TODO test
-        return null;
+        return questions.stream()
+                .filter(question -> {
+                    List<Choice> choices = choiceRepository.findByQuestionIdQuestion(question.getIdQuestion());
+                    if (choices == null || choices.isEmpty()) {
+                        System.out.println("Warning: No choices found for question with ID: " + question.getIdQuestion());
+                        return false;
+                    }
+                    return choices.stream()
+                            .noneMatch(choice -> responseRepository.existsByIdChoiceAndIdSpectator(choice, spectator));
+                })
+                .collect(Collectors.toList());
     }
 
     /**

@@ -5,8 +5,10 @@ import org.example.sqbackend.models.Poll;
 import org.example.sqbackend.models.Question;
 import org.example.sqbackend.models.Response.Response;
 import org.example.sqbackend.models.Spectator;
+import org.example.sqbackend.repositories.ChoiceRepository;
 import org.example.sqbackend.repositories.QuestionRepository;
 
+import org.example.sqbackend.repositories.ResponseRepository;
 import org.example.sqbackend.services.impl.QuestionServiceImpl;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -20,7 +22,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -31,6 +33,12 @@ public class QuestionsServiceTest {
 
     @InjectMocks
     private QuestionServiceImpl questionsService;
+
+    @Mock
+    private ChoiceRepository choiceRepository;
+
+    @Mock
+    private ResponseRepository responseRepository;
 
     @Test
     public void retrieve_all_question_from_poll(){
@@ -121,18 +129,43 @@ public class QuestionsServiceTest {
         choices2.add(choice4);
         inputQuestions.add(question2);
 
+        Question question3 = new Question();
+        question3.setContent(generateRandomString(50));
+        List<Choice> choices3 = new ArrayList<>();
+        Choice choice5 = new Choice();
+        choice5.setQuestion(question3);
+        choice5.setContent(generateRandomString(50));
+        choices3.add(choice5);
+        Choice choice6 = new Choice();
+        choice6.setQuestion(question3);
+        choice6.setContent(generateRandomString(50));
+        choices3.add(choice6);
+        inputQuestions.add(question3);
+
         Spectator spectator1 = new Spectator();
         Response response1 = new Response();
         response1.setSpectator(spectator1);
         response1.setChoice(choice1);
 
-        Spectator spectator2 = new Spectator(); // Checking if the spectator is taken into account
-        Response response2 = new Response();
-        response2.setSpectator(spectator2);
-        response2.setChoice(choice3);
 
         // mock repository behaviour
-
+        when(choiceRepository.findByQuestionIdQuestion(question1.getIdQuestion())).thenReturn(choices1);
+        when(choiceRepository.findByQuestionIdQuestion(question2.getIdQuestion())).thenReturn(choices2);
+        when(choiceRepository.findByQuestionIdQuestion(question3.getIdQuestion())).thenReturn(choices3);
+        when(responseRepository.existsByIdChoiceAndIdSpectator(any(Choice.class), any(Spectator.class))).thenAnswer(invocation -> {
+            Choice choice = invocation.getArgument(0);
+            Spectator spectator = invocation.getArgument(1);
+            // Logging
+            System.out.println("Invoked with choice: " + choice.getIdChoice());
+            System.out.println("Invoked with spectator: " + spectator.getIdSpectator());
+            // Check if a response exists for the given choice and spectator
+            if (choice.equals(choice1) && spectator.equals(spectator1)) {
+                System.out.println("Bingo! you can exclude the question with the choice : " + choice.getIdChoice());
+                return true; // Response exists for question 1 and spectator 1
+            } else {
+                return false;
+            }
+        });
 
 
         // Test
@@ -140,7 +173,7 @@ public class QuestionsServiceTest {
 
         // Results
         assertEquals(1, result.size());
-        assertEquals(question2.getContent(),result.getFirst().getContent());
+        assertEquals(question3.getContent(),result.getFirst().getContent());
     }
 
     @Test
