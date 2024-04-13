@@ -1,9 +1,11 @@
 package org.example.sqbackend;
 
+import org.example.sqbackend.models.Choice;
 import org.example.sqbackend.models.Poll;
 import org.example.sqbackend.models.Question;
+import org.example.sqbackend.models.Response.Response;
+import org.example.sqbackend.models.Spectator;
 import org.example.sqbackend.repositories.QuestionRepository;
-import org.example.sqbackend.services.QuestionService;
 
 import org.example.sqbackend.services.impl.QuestionServiceImpl;
 import org.junit.runner.RunWith;
@@ -13,7 +15,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.test.context.ActiveProfiles;
 import org.junit.Test;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -63,14 +64,13 @@ public class QuestionsServiceTest {
     }
 
     @Test
-    public void expiredQuestionsHandlingTest() {
+    public void filter_out_expired_questions() {
         // Setup
         List<Question> inputQuestions = new ArrayList<>();
         Question question1 = new Question();
         question1.setContent(generateRandomString(50));
         question1.setExpirationDate(new Date(System.currentTimeMillis() - 3600000)); // Expired (1 hour ago)
         inputQuestions.add(question1);
-
         Question question2 = new Question();
         question2.setContent(generateRandomString(50));
         question2.setExpirationDate(new Date(System.currentTimeMillis() + 3600000)); // Not expired (1 hour from now)
@@ -91,8 +91,56 @@ public class QuestionsServiceTest {
     }
 
     @Test
-    public void answeredQuestionsHandlingTest(){
+    public void filter_out_already_answered_questions() {
+        // Setup
+        List<Question> inputQuestions = new ArrayList<>();
 
+        Question question1 = new Question();
+        question1.setContent(generateRandomString(50));
+        List<Choice> choices1 = new ArrayList<>();
+        Choice choice1 = new Choice();
+        choice1.setQuestion(question1);
+        choice1.setContent(generateRandomString(50));
+        choices1.add(choice1);
+        Choice choice2 = new Choice();
+        choice2.setQuestion(question1);
+        choice2.setContent(generateRandomString(50));
+        choices1.add(choice2);
+        inputQuestions.add(question1);
+
+        Question question2 = new Question();
+        question2.setContent(generateRandomString(50));
+        List<Choice> choices2 = new ArrayList<>();
+        Choice choice3 = new Choice();
+        choice3.setQuestion(question2);
+        choice3.setContent(generateRandomString(50));
+        choices2.add(choice3);
+        Choice choice4 = new Choice();
+        choice4.setQuestion(question2);
+        choice4.setContent(generateRandomString(50));
+        choices2.add(choice4);
+        inputQuestions.add(question2);
+
+        Spectator spectator1 = new Spectator();
+        Response response1 = new Response();
+        response1.setSpectator(spectator1);
+        response1.setChoice(choice1);
+
+        Spectator spectator2 = new Spectator(); // Checking if the spectator is taken into account
+        Response response2 = new Response();
+        response2.setSpectator(spectator2);
+        response2.setChoice(choice3);
+
+        // mock repository behaviour
+
+
+
+        // Test
+        List<Question> result = questionsService.filterAnsweredQuestions(inputQuestions, spectator1);
+
+        // Results
+        assertEquals(1, result.size());
+        assertEquals(question2.getContent(),result.getFirst().getContent());
     }
 
     @Test
