@@ -104,26 +104,32 @@ public class QuestionsServiceTest {
         List<Question> inputQuestions = new ArrayList<>();
 
         Question question1 = new Question();
+        question1.setIdQuestion(generateRandomId());
         question1.setContent(generateRandomString(50));
         List<Choice> choices1 = new ArrayList<>();
         Choice choice1 = new Choice();
+        choice1.setIdChoice(generateRandomId());
         choice1.setQuestion(question1);
         choice1.setContent(generateRandomString(50));
         choices1.add(choice1);
         Choice choice2 = new Choice();
+        choice2.setIdChoice(generateRandomId());
         choice2.setQuestion(question1);
         choice2.setContent(generateRandomString(50));
         choices1.add(choice2);
         inputQuestions.add(question1);
 
         Question question2 = new Question();
+        question2.setIdQuestion(generateRandomId());
         question2.setContent(generateRandomString(50));
         List<Choice> choices2 = new ArrayList<>();
         Choice choice3 = new Choice();
+        choice3.setIdChoice(generateRandomId());
         choice3.setQuestion(question2);
         choice3.setContent(generateRandomString(50));
         choices2.add(choice3);
         Choice choice4 = new Choice();
+        choice4.setIdChoice(generateRandomId());
         choice4.setQuestion(question2);
         choice4.setContent(generateRandomString(50));
         choices2.add(choice4);
@@ -131,21 +137,28 @@ public class QuestionsServiceTest {
 
         Question question3 = new Question();
         question3.setContent(generateRandomString(50));
+        question3.setIdQuestion(generateRandomId());
         List<Choice> choices3 = new ArrayList<>();
         Choice choice5 = new Choice();
+        choice5.setIdChoice(generateRandomId());
         choice5.setQuestion(question3);
         choice5.setContent(generateRandomString(50));
         choices3.add(choice5);
         Choice choice6 = new Choice();
+        choice6.setIdChoice(generateRandomId());
         choice6.setQuestion(question3);
         choice6.setContent(generateRandomString(50));
         choices3.add(choice6);
         inputQuestions.add(question3);
 
         Spectator spectator1 = new Spectator();
+        spectator1.setIdSpectator(generateRandomId());
         Response response1 = new Response();
         response1.setSpectator(spectator1);
         response1.setChoice(choice1);
+        Response response2 = new Response();
+        response2.setSpectator(spectator1);
+        response2.setChoice(choice4);
 
 
         // mock repository behaviour
@@ -155,13 +168,10 @@ public class QuestionsServiceTest {
         when(responseRepository.existsByIdChoiceAndIdSpectator(any(Choice.class), any(Spectator.class))).thenAnswer(invocation -> {
             Choice choice = invocation.getArgument(0);
             Spectator spectator = invocation.getArgument(1);
-            // Logging
-            System.out.println("Invoked with choice: " + choice.getIdChoice());
-            System.out.println("Invoked with spectator: " + spectator.getIdSpectator());
+
             // Check if a response exists for the given choice and spectator
-            if (choice.equals(choice1) && spectator.equals(spectator1)) {
-                System.out.println("Bingo! you can exclude the question with the choice : " + choice.getIdChoice());
-                return true; // Response exists for question 1 and spectator 1
+            if ((choice.equals(choice1)||choice.equals(choice4)) && spectator.equals(spectator1)) {
+                return true; // Response exists for question 1 and 2 and spectator 1
             } else {
                 return false;
             }
@@ -194,5 +204,9 @@ public class QuestionsServiceTest {
             sb.append(characters.charAt(random.nextInt(characters.length())));
         }
         return sb.toString();
+    }
+
+    private int generateRandomId() {
+        return (int) (Math.random() * 999999);
     }
 }
