@@ -1,6 +1,6 @@
 package org.example.sqbackend.services.impl;
 
-import jdk.jshell.spi.ExecutionControl;
+
 import org.example.sqbackend.models.Choice;
 import org.example.sqbackend.models.Poll;
 import org.example.sqbackend.models.Question;
@@ -12,7 +12,6 @@ import org.example.sqbackend.repositories.ResponseRepository;
 import org.example.sqbackend.services.QuestionService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,7 +21,6 @@ public class QuestionServiceImpl implements QuestionService {
 
     private final QuestionRepository questionRepository;
     private final ResponseRepository responseRepository;
-
     private final ChoiceRepository choiceRepository;
 
     public QuestionServiceImpl(QuestionRepository questionRepository, PollRepository pollRepository, ResponseRepository responseRepository, ChoiceRepository choiceRepository) {
@@ -52,9 +50,11 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     /**
-     * @param questions
-     * @param spectator
-     * @return
+     * Filters the list of questions to exclude those that have been answered by the spectator.
+     *
+     * @param questions  The list of questions to filter.
+     * @param spectator  The spectator who answered the questions.
+     * @return A list of unanswered questions.
      */
     @Override
     public List<Question> filterAnsweredQuestions(List<Question> questions, Spectator spectator) {
@@ -69,9 +69,11 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     /**
-     * @param poll
-     * @param spectator
-     * @return a list of questions filtered by poll and spectator, that do not have an answer from this spectator
+     * Retrieves a list of questions filtered by poll and spectator, that do not have an answer from this spectator.
+     *
+     * @param poll       The poll to filter by.
+     * @param spectator  The spectator to filter by.
+     * @return A list of filtered questions.
      */
     @Override
     public List<Question> getFilteredQuestionsByPollAndSpectator(Poll poll, Spectator spectator) {
@@ -83,8 +85,10 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     /**
-     * @param poll
-     * @return
+     * Retrieves all questions associated with a poll.
+     *
+     * @param poll  The poll to retrieve questions from.
+     * @return A list of questions associated with the poll.
      */
     @Override
     public List<Question> retrieveAllQuestionsFromPoll(Poll poll) {
