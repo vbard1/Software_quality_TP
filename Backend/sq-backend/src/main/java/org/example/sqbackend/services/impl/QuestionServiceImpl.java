@@ -35,6 +35,7 @@ public class QuestionServiceImpl implements QuestionService {
      * @param questions The list of questions to filter.
      * @return A list of non-expired questions.
      */
+    @Override
     public List<Question> filterExpiredQuestions(List<Question> questions) {
         return questions.stream().filter(question -> !isQuestionExpired(question)).collect(Collectors.toList());
     }
