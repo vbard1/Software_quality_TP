@@ -4,6 +4,7 @@ package org.example.sqbackend.models;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 public class Spectator {
@@ -67,6 +68,24 @@ public class Spectator {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Spectator spectator = (Spectator) o;
+        return idSpectator == spectator.idSpectator &&
+                Objects.equals(firstname, spectator.firstname) &&
+                Objects.equals(lastname, spectator.lastname) &&
+                Objects.equals(dateOfBirth, spectator.dateOfBirth) &&
+                Objects.equals(email, spectator.email) &&
+                Objects.equals(address, spectator.address);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idSpectator, firstname, lastname, dateOfBirth, email, address);
     }
 }
 

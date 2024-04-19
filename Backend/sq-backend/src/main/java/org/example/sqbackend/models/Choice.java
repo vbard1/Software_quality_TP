@@ -2,6 +2,8 @@ package org.example.sqbackend.models;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 public class Choice {
 
@@ -37,5 +39,20 @@ public class Choice {
 
     public void setQuestion(Question question) {
         this.question = question;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Choice choice = (Choice) o;
+        return idChoice == choice.idChoice &&
+                Objects.equals(content, choice.content) &&
+                Objects.equals(question, choice.question);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idChoice, content, question);
     }
 }

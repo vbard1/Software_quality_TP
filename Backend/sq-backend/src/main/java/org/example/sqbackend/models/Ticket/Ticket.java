@@ -5,6 +5,7 @@ import org.example.sqbackend.models.Event;
 import org.example.sqbackend.models.Spectator;
 
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "ticket")
@@ -59,5 +60,21 @@ public class Ticket {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ticket ticket = (Ticket) o;
+        return Objects.equals(id, ticket.id) &&
+                Objects.equals(ticketNumber, ticket.ticketNumber) &&
+                Objects.equals(startDate, ticket.startDate) &&
+                Objects.equals(endDate, ticket.endDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, ticketNumber, startDate, endDate);
     }
 }
