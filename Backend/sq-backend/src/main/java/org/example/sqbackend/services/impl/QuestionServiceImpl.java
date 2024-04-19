@@ -24,22 +24,11 @@ public class QuestionServiceImpl implements QuestionService {
     private final ResponseRepository responseRepository;
 
     private final ChoiceRepository choiceRepository;
-    private final PollRepository pollRepository;
+
     public QuestionServiceImpl(QuestionRepository questionRepository, PollRepository pollRepository, ResponseRepository responseRepository, ChoiceRepository choiceRepository) {
-        this.questionRepository=questionRepository;
-        this.pollRepository=pollRepository;
+        this.questionRepository = questionRepository;
         this.responseRepository = responseRepository;
         this.choiceRepository = choiceRepository;
-    }
-
-    /**
-     * @param poll
-     * @return
-     */
-    @Override
-    public List<Question> getAllQuestionsByPoll(Poll poll) {
-        // TODO test
-        return null;
     }
 
     /**
@@ -49,15 +38,13 @@ public class QuestionServiceImpl implements QuestionService {
      * @return A list of non-expired questions.
      */
     public List<Question> filterExpiredQuestions(List<Question> questions) {
-        return questions.stream()
-                .filter(question -> !isQuestionExpired(question))
-                .collect(Collectors.toList());
+        return questions.stream().filter(question -> !isQuestionExpired(question)).collect(Collectors.toList());
     }
 
     /**
      * Checks if a question is expired based on the current date.
      *
-     * @param question   The question to check.
+     * @param question The question to check.
      * @return True if the question is expired, false otherwise.
      */
     public boolean isQuestionExpired(Question question) {
@@ -71,28 +58,28 @@ public class QuestionServiceImpl implements QuestionService {
      */
     @Override
     public List<Question> filterAnsweredQuestions(List<Question> questions, Spectator spectator) {
-        return questions.stream()
-                .filter(question -> {
-                    List<Choice> choices = choiceRepository.findByQuestionIdQuestion(question.getIdQuestion());
-                    if (choices == null || choices.isEmpty()) {
-                        System.out.println("Warning: No choices found for question with ID: " + question.getIdQuestion());
-                        return false;
-                    }
-                    return choices.stream()
-                            .noneMatch(choice -> responseRepository.existsByIdChoiceAndIdSpectator(choice, spectator));
-                })
-                .collect(Collectors.toList());
+        return questions.stream().filter(question -> {
+            List<Choice> choices = choiceRepository.findByQuestionIdQuestion(question.getIdQuestion());
+            if (choices == null || choices.isEmpty()) {
+                System.out.println("Warning: No choices found for question with ID: " + question.getIdQuestion());
+                return false;
+            }
+            return choices.stream().noneMatch(choice -> responseRepository.existsByIdChoiceAndIdSpectator(choice, spectator));
+        }).collect(Collectors.toList());
     }
 
     /**
      * @param poll
      * @param spectator
-     * @return
+     * @return a list of questions filtered by poll and spectator, that do not have an answer from this spectator
      */
     @Override
-    public List<Question> getQuestionsByPollAndSpectator(Poll poll, Spectator spectator) {
-        // TODO test
-        return null;
+    public List<Question> getFilteredQuestionsByPollAndSpectator(Poll poll, Spectator spectator) {
+        return filterExpiredQuestions(
+                filterAnsweredQuestions(
+                        retrieveAllQuestionsFromPoll(poll), spectator
+                )
+        );
     }
 
     /**
