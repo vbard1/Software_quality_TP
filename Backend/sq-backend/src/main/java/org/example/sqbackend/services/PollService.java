@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface PollService {
     List<Poll> getAllPollsBySpectator(int spectatorId);
+    Poll getPollById(int id);
 }

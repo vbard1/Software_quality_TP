@@ -19,7 +19,6 @@ public class PollServiceImpl implements PollService {
         this.pollRepository = pollRepository;
     }
 
-    @Override
     public List<Poll> getAllPollsBySpectator(int spectatorId) {
         List<Poll> polls = pollRepository.getAllPollsBySpectator(spectatorId)
                 .stream()
@@ -34,5 +33,9 @@ public class PollServiceImpl implements PollService {
                 })
                 .collect(Collectors.toList());
         return polls;
+    }
+
+    public Poll getPollById(int id) {
+        return pollRepository.findById(id).orElse(null);
     }
 }
