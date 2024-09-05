@@ -28,6 +28,10 @@ public class ConnectionServiceImpl implements ConnectionService {
             throw new InvalidTicketIdException("The ticket number is not valid");
 
         Date currentDate = new Date();
+
+        if (ticket.getEndDate() == null)
+            throw new InvalidTicketIdException("No date for the ticket");
+
         if (ticket.getEndDate().before(currentDate))
             throw new OutOfDateTicketException("The event is finished, and the ticket has expired");
 

@@ -50,6 +50,7 @@ class ConnectionServiceImplTest {
         Ticket ticket = new Ticket();
 
         ticket.setSpectator(spectator);
+        ticket.setEndDate(new Date(2024,9,9));
 
         when(ticketRepository.findTicketByTicketNumber(ticketnumber)).thenReturn(ticket);
 
