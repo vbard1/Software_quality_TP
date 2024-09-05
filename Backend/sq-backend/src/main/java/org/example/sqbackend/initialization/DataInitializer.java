@@ -119,6 +119,13 @@ public class DataInitializer implements CommandLineRunner {
             ticketFutureEventSpect1.setEndDate(futureEvent.getEndDate());
             ticketFutureEventSpect1.setStartDate(futureEvent.getStartDate());
 
+            Ticket ticketPastEventSpect1 = new Ticket();
+            ticketPastEventSpect1.setSpectator(spectator1);
+            ticketPastEventSpect1.setEvent(passedEvent);
+            ticketPastEventSpect1.setTicketNumber("T-" + 15358);
+            ticketPastEventSpect1.setEndDate(passedEvent.getEndDate());
+            ticketPastEventSpect1.setStartDate(passedEvent.getStartDate());
+
             Ticket ticketCurrentEventSpect2 = new Ticket();
             ticketCurrentEventSpect2.setSpectator(spectator2);
             ticketCurrentEventSpect2.setEvent(currentEvent);
@@ -133,7 +140,7 @@ public class DataInitializer implements CommandLineRunner {
             ticketPassedEventSpect2.setStartDate(generateRandomDate(passedEvent.getStartDate(), passedEvent.getEndDate()));
             ticketPassedEventSpect2.setEndDate(generateRandomDate(ticketPassedEventSpect2.getStartDate(), passedEvent.getEndDate()));
 
-            ticketRepository.saveAll(Arrays.asList(ticketCurrentEventSpect1, ticketPassedEventSpect2, ticketPassedEventSpect2));
+            ticketRepository.saveAll(Arrays.asList(ticketCurrentEventSpect1, ticketFutureEventSpect1, ticketCurrentEventSpect2, ticketPastEventSpect1, ticketPassedEventSpect2));
 
             Response sampleResponse = new Response();
             sampleResponse.setSpectator(spectator1);

@@ -19,6 +19,10 @@ public class Event {
     private Date startDate;
     private Date endDate;
 
+    public Event() {
+
+    }
+
     public int getIdEvent() {
         return idEvent;
     }
@@ -48,6 +52,13 @@ public class Event {
     }
 
     public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public Event(int idEvent, String name, Date startDate, Date endDate) {
+        this.idEvent = idEvent;
+        this.name = name;
+        this.startDate = startDate;
         this.endDate = endDate;
     }
 
