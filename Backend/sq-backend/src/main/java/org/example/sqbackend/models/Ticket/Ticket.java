@@ -77,4 +77,8 @@ public class Ticket {
     public int hashCode() {
         return Objects.hash(id, ticketNumber, startDate, endDate);
     }
+
+    public TicketId getId() {
+        return id;
+    }
 }
