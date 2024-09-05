@@ -52,4 +52,11 @@ public class ResponseId implements Serializable {
         result = 31 * result + (getChoice() != null ? getChoice().hashCode() : 0);
         return result;
     }
+    @Override
+    public String toString() {
+        return "ResponseId{" +
+                "spectator=" + spectator +
+                ", choice=" + choice +
+                '}';
+    }
 }
