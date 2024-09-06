@@ -21,6 +21,12 @@ public class Poll {
 
     }
 
+    public Poll(int idPoll, Event event, String name) {
+        this.idPoll = idPoll;
+        this.event = event;
+        this.name = name;
+    }
+
     public int getIdPoll() {
         return idPoll;
     }
@@ -42,12 +48,6 @@ public class Poll {
     }
 
     public void setName(String name) {
-        this.name = name;
-    }
-
-    public Poll(int idPoll, Event event, String name) {
-        this.idPoll = idPoll;
-        this.event = event;
         this.name = name;
     }
 

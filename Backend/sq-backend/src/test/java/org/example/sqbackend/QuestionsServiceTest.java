@@ -39,15 +39,15 @@ public class QuestionsServiceTest {
         // Setup
         List<Question> mockQuestions = new ArrayList<>();
         Question question1 = new Question();
-        question1.setContent(generateRandomString(50));
+        question1.setContent(GeneratedStringUtils.generateRandomString(50));
         mockQuestions.add(question1);
 
         Question question2 = new Question();
-        question2.setContent(generateRandomString(50));
+        question2.setContent(GeneratedStringUtils.generateRandomString(50));
         mockQuestions.add(question2);
 
         Question question3 = new Question();
-        question3.setContent(generateRandomString(50));
+        question3.setContent(GeneratedStringUtils.generateRandomString(50));
         mockQuestions.add(question3);
 
         Poll testPoll = new Poll();
@@ -70,16 +70,16 @@ public class QuestionsServiceTest {
         // Setup
         List<Question> inputQuestions = new ArrayList<>();
         Question question1 = new Question();
-        question1.setContent(generateRandomString(50));
+        question1.setContent(GeneratedStringUtils.generateRandomString(50));
         question1.setExpirationDate(new Date(System.currentTimeMillis() - 3600000)); // Expired (1 hour ago)
         inputQuestions.add(question1);
         Question question2 = new Question();
-        question2.setContent(generateRandomString(50));
+        question2.setContent(GeneratedStringUtils.generateRandomString(50));
         question2.setExpirationDate(new Date(System.currentTimeMillis() + 3600000)); // Not expired (1 hour from now)
         inputQuestions.add(question2);
 
         Question question3 = new Question();
-        question3.setContent(generateRandomString(50));
+        question3.setContent(GeneratedStringUtils.generateRandomString(50));
         question3.setExpirationDate(new Date(System.currentTimeMillis() + 86400000)); // Not expired (1 day from now)
         inputQuestions.add(question3);
 
@@ -98,55 +98,55 @@ public class QuestionsServiceTest {
         List<Question> inputQuestions = new ArrayList<>();
 
         Question question1 = new Question();
-        question1.setIdQuestion(generateRandomId());
-        question1.setContent(generateRandomString(50));
+        question1.setIdQuestion(GeneratedStringUtils.generateRandomId());
+        question1.setContent(GeneratedStringUtils.generateRandomString(50));
         List<Choice> choices1 = new ArrayList<>();
         Choice choice1 = new Choice();
-        choice1.setIdChoice(generateRandomId());
+        choice1.setIdChoice(GeneratedStringUtils.generateRandomId());
         choice1.setQuestion(question1);
-        choice1.setContent(generateRandomString(50));
+        choice1.setContent(GeneratedStringUtils.generateRandomString(50));
         choices1.add(choice1);
         Choice choice2 = new Choice();
-        choice2.setIdChoice(generateRandomId());
+        choice2.setIdChoice(GeneratedStringUtils.generateRandomId());
         choice2.setQuestion(question1);
-        choice2.setContent(generateRandomString(50));
+        choice2.setContent(GeneratedStringUtils.generateRandomString(50));
         choices1.add(choice2);
         inputQuestions.add(question1);
 
         Question question2 = new Question();
-        question2.setIdQuestion(generateRandomId());
-        question2.setContent(generateRandomString(50));
+        question2.setIdQuestion(GeneratedStringUtils.generateRandomId());
+        question2.setContent(GeneratedStringUtils.generateRandomString(50));
         List<Choice> choices2 = new ArrayList<>();
         Choice choice3 = new Choice();
-        choice3.setIdChoice(generateRandomId());
+        choice3.setIdChoice(GeneratedStringUtils.generateRandomId());
         choice3.setQuestion(question2);
-        choice3.setContent(generateRandomString(50));
+        choice3.setContent(GeneratedStringUtils.generateRandomString(50));
         choices2.add(choice3);
         Choice choice4 = new Choice();
-        choice4.setIdChoice(generateRandomId());
+        choice4.setIdChoice(GeneratedStringUtils.generateRandomId());
         choice4.setQuestion(question2);
-        choice4.setContent(generateRandomString(50));
+        choice4.setContent(GeneratedStringUtils.generateRandomString(50));
         choices2.add(choice4);
         inputQuestions.add(question2);
 
         Question question3 = new Question();
-        question3.setContent(generateRandomString(50));
-        question3.setIdQuestion(generateRandomId());
+        question3.setContent(GeneratedStringUtils.generateRandomString(50));
+        question3.setIdQuestion(GeneratedStringUtils.generateRandomId());
         List<Choice> choices3 = new ArrayList<>();
         Choice choice5 = new Choice();
-        choice5.setIdChoice(generateRandomId());
+        choice5.setIdChoice(GeneratedStringUtils.generateRandomId());
         choice5.setQuestion(question3);
-        choice5.setContent(generateRandomString(50));
+        choice5.setContent(GeneratedStringUtils.generateRandomString(50));
         choices3.add(choice5);
         Choice choice6 = new Choice();
-        choice6.setIdChoice(generateRandomId());
+        choice6.setIdChoice(GeneratedStringUtils.generateRandomId());
         choice6.setQuestion(question3);
-        choice6.setContent(generateRandomString(50));
+        choice6.setContent(GeneratedStringUtils.generateRandomString(50));
         choices3.add(choice6);
         inputQuestions.add(question3);
 
         Spectator spectator1 = new Spectator();
-        spectator1.setIdSpectator(generateRandomId());
+        spectator1.setIdSpectator(GeneratedStringUtils.generateRandomId());
         Response response1 = new Response();
         response1.setSpectator(spectator1);
         response1.setChoice(choice1);
@@ -194,53 +194,53 @@ public class QuestionsServiceTest {
         poll.setEvent(event);
 
         Question question1 = new Question();
-        question1.setIdQuestion(generateRandomId());
+        question1.setIdQuestion(GeneratedStringUtils.generateRandomId());
         question1.setExpirationDate(new Date(System.currentTimeMillis() - 3600000)); // Expired (1 hour ago)
-        question1.setContent(generateRandomString(50));
+        question1.setContent(GeneratedStringUtils.generateRandomString(50));
         question1.setPoll(poll);
 
         List<Choice> choices1 = new ArrayList<>();
         Choice choice1 = new Choice();
-        choice1.setIdChoice(generateRandomId());
+        choice1.setIdChoice(GeneratedStringUtils.generateRandomId());
         choice1.setQuestion(question1);
-        choice1.setContent(generateRandomString(50));
+        choice1.setContent(GeneratedStringUtils.generateRandomString(50));
         choices1.add(choice1);
 
         Question question2 = new Question();
-        question2.setIdQuestion(generateRandomId());
-        question2.setContent(generateRandomString(50));
+        question2.setIdQuestion(GeneratedStringUtils.generateRandomId());
+        question2.setContent(GeneratedStringUtils.generateRandomString(50));
         question2.setExpirationDate(new Date());
         question2.setPoll(poll);
         question2.setExpirationDate(new Date(System.currentTimeMillis() - 3600000)); // Expired (1 hour ago)
 
         List<Choice> choices2 = new ArrayList<>();
         Choice choice3 = new Choice();
-        choice3.setIdChoice(generateRandomId());
+        choice3.setIdChoice(GeneratedStringUtils.generateRandomId());
         choice3.setQuestion(question2);
-        choice3.setContent(generateRandomString(50));
+        choice3.setContent(GeneratedStringUtils.generateRandomString(50));
         choices2.add(choice3);
 
         Question question3 = new Question();
-        question3.setContent(generateRandomString(50));
-        question3.setIdQuestion(generateRandomId());
+        question3.setContent(GeneratedStringUtils.generateRandomString(50));
+        question3.setIdQuestion(GeneratedStringUtils.generateRandomId());
         question3.setExpirationDate(new Date(System.currentTimeMillis() + 3600000)); // Not expired (1 hour from now)
         question3.setPoll(poll);
 
         List<Choice> choices3 = new ArrayList<>();
         Choice choice5 = new Choice();
-        choice5.setIdChoice(generateRandomId());
+        choice5.setIdChoice(GeneratedStringUtils.generateRandomId());
         choice5.setQuestion(question3);
-        choice5.setContent(generateRandomString(50));
+        choice5.setContent(GeneratedStringUtils.generateRandomString(50));
         choices3.add(choice5);
 
         Choice choice6 = new Choice();
-        choice6.setIdChoice(generateRandomId());
+        choice6.setIdChoice(GeneratedStringUtils.generateRandomId());
         choice6.setQuestion(question3);
-        choice6.setContent(generateRandomString(50));
+        choice6.setContent(GeneratedStringUtils.generateRandomString(50));
         choices3.add(choice6);
 
         Spectator spectator1 = new Spectator();
-        spectator1.setIdSpectator(generateRandomId());
+        spectator1.setIdSpectator(GeneratedStringUtils.generateRandomId());
 
         Response response1 = new Response();
         response1.setSpectator(spectator1);
@@ -270,19 +270,5 @@ public class QuestionsServiceTest {
         // Results
         assertEquals(1, result.size());
         assertEquals(question3.getContent(),result.getFirst().getContent());
-    }
-
-    private String generateRandomString(int length) {
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        StringBuilder sb = new StringBuilder(length);
-        Random random = new Random();
-        for (int i = 0; i < length; i++) {
-            sb.append(characters.charAt(random.nextInt(characters.length())));
-        }
-        return sb.toString();
-    }
-
-    private int generateRandomId() {
-        return (int) (Math.random() * 999999);
     }
 }

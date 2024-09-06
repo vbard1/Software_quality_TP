@@ -37,7 +37,7 @@ public class PollController {
         return ResponseEntity.ok(questions);
     }
 
-    @GetMapping("/polls/{spectatorId}")
+    @GetMapping("/{spectatorId}")
     public ResponseEntity<List<Poll>> championshipsPage(@PathVariable int spectatorId) {
         List<Poll> polls = pollService.getAllPollsBySpectator(spectatorId);
 
