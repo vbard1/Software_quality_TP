@@ -16,6 +16,17 @@ public class Poll {
     private Event event;
 
     private String name;
+
+    public Poll() {
+
+    }
+
+    public Poll(int idPoll, Event event, String name) {
+        this.idPoll = idPoll;
+        this.event = event;
+        this.name = name;
+    }
+
     public int getIdPoll() {
         return idPoll;
     }
