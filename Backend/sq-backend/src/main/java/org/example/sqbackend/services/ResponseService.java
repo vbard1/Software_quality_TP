@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface ResponseService {
 
-    List<Response> getResponseByChoice(Choice choice);
+    List<Response> getAllResponsesByChoice(Choice choice);
 }

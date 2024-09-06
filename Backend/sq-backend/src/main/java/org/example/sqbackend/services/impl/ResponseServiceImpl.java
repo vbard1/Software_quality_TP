@@ -19,7 +19,7 @@ public class ResponseServiceImpl implements ResponseService {
     }
 
     @Override
-    public List<Response> getResponseByChoice(Choice choice) {
+    public List<Response> getAllResponsesByChoice(Choice choice) {
         return responseRepository.findAllByChoice(choice);
     }
 }

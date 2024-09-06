@@ -2,11 +2,7 @@ package org.example.sqbackend;
 
 import org.example.sqbackend.models.*;
 import org.example.sqbackend.models.Response.Response;
-import org.example.sqbackend.repositories.ChoiceRepository;
-import org.example.sqbackend.repositories.QuestionRepository;
 import org.example.sqbackend.repositories.ResponseRepository;
-import org.example.sqbackend.repositories.SpectatorRepository;
-import org.example.sqbackend.services.impl.QuestionServiceImpl;
 import org.example.sqbackend.services.impl.ResponseServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,54 +23,28 @@ public class ResponsesServiceTest {
     @InjectMocks
     private ResponseServiceImpl responseService;
 
-    @Mock
-    private QuestionRepository questionsRepository;
 
     @Mock
     private ResponseRepository responseRepository;
 
-    @Mock
-    private ChoiceRepository choiceRepository;
-
-    @Mock
-    private SpectatorRepository spectatorRepository;
-    @Mock
-    private Choice choice;
-    @Mock
-    private Spectator spectator;
 
     @Test
     public void retrieve_all_responses_by_choice(){
         // Setup
 
-        List<Spectator> mockSpectator = new ArrayList<>();
         Spectator spectator1 = new Spectator();
-        spectator1.setIdSpectator(generateRandomId());
-        mockSpectator.add(spectator1);
+        spectator1.setIdSpectator(generateRandomId());;
         Spectator spectator2 = new Spectator();
         spectator2.setIdSpectator(generateRandomId());
-        mockSpectator.add(spectator2);
 
         Question question1 = new Question();
         question1.setIdQuestion(generateRandomId());
         question1.setContent(generateRandomString(50));
 
-        List<Choice> mockChoices = new ArrayList<>();
         Choice choice1 = new Choice();
         choice1.setIdChoice(generateRandomId());
         choice1.setQuestion(question1);
         choice1.setContent(generateRandomString(50));
-        mockChoices.add(choice1);
-        Choice choice2 = new Choice();
-        choice2.setIdChoice(generateRandomId());
-        choice2.setQuestion(question1);
-        choice2.setContent(generateRandomString(50));
-        mockChoices.add(choice2);
-        Choice choice3 = new Choice();
-        choice3.setIdChoice(generateRandomId());
-        choice3.setQuestion(question1);
-        choice3.setContent(generateRandomString(50));
-        mockChoices.add(choice3);
 
         List<Response> mockResponse = new ArrayList<>();
         Response response1 = new Response();
@@ -86,8 +56,15 @@ public class ResponsesServiceTest {
         response2.setChoice(choice1);
         mockResponse.add(response2);
 
-        when(choiceRepository.findByQuestionIdQuestion(question1.getIdQuestion())).thenReturn(mockChoices);
+        when(responseRepository.findAllByChoice(choice1)).thenReturn(mockResponse);
 
+        // Test
+        List<Response> result = responseService.getAllResponsesByChoice(choice1);
+
+        // Results
+        assertEquals(2, result.size());
+        assertEquals(mockResponse.get(0).getSpectator(), result.get(0).getSpectator());
+        assertEquals(mockResponse.get(1).getSpectator(), result.get(1).getSpectator());
     }
 
 
